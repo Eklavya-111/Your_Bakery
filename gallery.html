@@ -1,0 +1,1368 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FAF8F5">
+  <title>Gallery — Sidewalk Patisserie</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    /* Smooth cross-page luxury fade & subtle scale */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: pageFadeOut 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+::view-transition-new(root) {
+  animation: pageFadeIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes pageFadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.99); }
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: scale(1.01); }
+  to   { opacity: 1; transform: scale(1); }
+}
+    :root {
+      --white: #FAF8F5;
+      --cream: #F2ECE4;
+      --espresso: #2C1E16;
+      --gold: #C5A059;
+      --muted: #8D8177;
+      --line: rgba(44, 30, 22, .12);
+      --serif: "Playfair Display", serif;
+      --sans: "Plus Jakarta Sans", sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--white);
+      color: var(--espresso);
+      font-family: var(--sans);
+      overflow-x: hidden;
+    }
+
+    button, a {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* Ambient particles */
+
+    #dust {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: .48;
+    }
+
+    header, main, footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+
+.site-header {
+  height: 90px;
+  padding: 0 5.2%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  background: rgba(250, 248, 245, 0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(44, 30, 22, 0.08);
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.header-right {
+  justify-content: flex-end;
+}
+
+.site-header nav a {
+  color: #2C1E16;
+  text-decoration: none;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 1.25px;
+  white-space: nowrap;
+  transition: opacity .3s;
+}
+
+.site-header nav a:hover {
+  opacity: .55;
+}
+
+.header-logo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 39px;
+  font-weight: 400;
+  letter-spacing: -2px;
+  color: #2C1E16;
+  text-decoration: none;
+}
+
+.header-bag {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.header-bag span {
+  width: 21px;
+  height: 21px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+}
+
+@media (max-width: 700px) {
+  .site-header {
+    height: 75px;
+    padding: 0 5%;
+  }
+
+  .header-left,
+  .header-right {
+    gap: 12px;
+  }
+
+  .site-header nav a {
+    font-size: 7px;
+    letter-spacing: .5px;
+  }
+
+  .header-logo {
+    font-size: 29px;
+  }
+
+  .header-left a:nth-child(2),
+  .header-left a:nth-child(3),
+  .header-right a:first-child {
+    display: none;
+  }
+}
+
+    /* Hero */
+
+    .hero {
+      padding: 100px 7% 65px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 400;
+      line-height: 1.08;
+      letter-spacing: -3px;
+    }
+
+    .hero h1 em {
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    .hero-description {
+      max-width: 470px;
+      margin: 25px auto 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 2;
+      font-weight: 300;
+    }
+
+    .hero-rule {
+      width: 55px;
+      height: 1px;
+      background: var(--gold);
+      margin: 35px auto 0;
+    }
+
+    /* Filters */
+
+    .filter-wrap {
+      padding: 12px 7% 55px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .filter-btn {
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: transparent;
+      border-radius: 50px;
+      padding: 12px 22px;
+      font-size: 10px;
+      letter-spacing: .8px;
+      transition: .3s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--espresso);
+      color: white;
+      border-color: var(--espresso);
+    }
+
+    /* Gallery */
+
+    .gallery-section {
+      padding: 0 7% 120px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 55px 28px;
+      align-items: start;
+    }
+
+    .gallery-card {
+      position: relative;
+      cursor: pointer;
+      perspective: 1100px;
+      transform-style: preserve-3d;
+      transition: opacity .35s, transform .5s;
+      animation: reveal .7s both;
+    }
+
+    .gallery-card:nth-child(3n + 2) {
+      margin-top: 75px;
+    }
+
+    .gallery-card:nth-child(3n) {
+      margin-top: 30px;
+    }
+
+    .gallery-card.hidden {
+      display: none;
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card-visual {
+      position: relative;
+      overflow: hidden;
+      background: var(--cream);
+      transform-style: preserve-3d;
+      transition: transform .16s ease-out;
+      will-change: transform;
+      box-shadow: 0 15px 35px rgba(44, 30, 22, .07);
+    }
+
+    .gallery-card:nth-child(odd) .card-visual {
+      aspect-ratio: 4 / 5;
+    }
+
+    .gallery-card:nth-child(even) .card-visual {
+      aspect-ratio: 4 / 4.7;
+    }
+
+    .card-visual img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform .8s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .gallery-card:hover .card-visual img {
+      transform: scale(1.07);
+    }
+
+    .card-glare {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      background: linear-gradient(
+        125deg,
+        transparent 25%,
+        rgba(255, 255, 255, .35) 48%,
+        transparent 70%
+      );
+      mix-blend-mode: screen;
+      transition: opacity .3s;
+    }
+
+    .gallery-card:hover .card-glare {
+      opacity: .8;
+    }
+
+    .card-number {
+      position: absolute;
+      top: 17px;
+      left: 17px;
+      color: white;
+      font-family: var(--serif);
+      font-size: 13px;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, .4);
+      transform: translateZ(25px);
+    }
+
+    .card-open {
+      position: absolute;
+      bottom: 18px;
+      right: 18px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--espresso);
+      background: rgba(250, 248, 245, .92);
+      font-size: 20px;
+      transform: translateZ(30px);
+      transition: .3s;
+    }
+
+    .gallery-card:hover .card-open {
+      background: var(--gold);
+      color: white;
+    }
+
+    .card-info {
+      padding: 20px 2px 0;
+    }
+
+    .card-category {
+      color: var(--gold);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-family: var(--serif);
+      font-size: 25px;
+      font-weight: 400;
+    }
+
+    .card-subtitle {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 7px;
+      letter-spacing: .3px;
+    }
+
+    /* Lightbox */
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(27, 19, 15, .82);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 35px;
+      opacity: 0;
+      visibility: hidden;
+      transition: .35s;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-panel {
+      width: min(100%, 1000px);
+      max-height: 90vh;
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      position: relative;
+      overflow: auto;
+      transform: translateY(25px);
+      transition: .4s;
+    }
+
+    .lightbox.open .lightbox-panel {
+      transform: translateY(0);
+    }
+
+    .lightbox-image {
+      min-height: 560px;
+      background: var(--cream);
+    }
+
+    .lightbox-image img {
+      width: 100%;
+      height: 100%;
+      min-height: 560px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lightbox-content {
+      padding: 75px 55px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .lightbox-category {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      font-size: 9px;
+      margin-bottom: 20px;
+    }
+
+    .lightbox-content h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(34px, 4vw, 49px);
+      line-height: 1.12;
+    }
+
+    .lightbox-description {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 2;
+      margin: 23px 0 30px;
+    }
+
+    .detail-row {
+      padding: 15px 0;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      font-size: 10px;
+    }
+
+    .detail-row span:first-child {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .detail-row span:last-child {
+      text-align: right;
+    }
+
+    .request-btn {
+      margin-top: 35px;
+      border: none;
+      background: var(--espresso);
+      color: white;
+      padding: 17px 20px;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+      font-size: 9px;
+      transition: .3s;
+    }
+
+    .request-btn:hover {
+      background: var(--gold);
+    }
+
+    .close-lightbox {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      z-index: 2;
+      border: 0;
+      background: var(--white);
+      color: var(--espresso);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    /* Footer */
+
+    footer {
+      background: var(--espresso);
+      color: var(--white);
+      padding: 75px 7% 30px;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+      padding-bottom: 65px;
+    }
+
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 42px;
+      letter-spacing: -1.5px;
+    }
+
+    .footer-logo span {
+      color: var(--gold);
+    }
+
+    .footer-note {
+      color: rgba(255,255,255,.5);
+      max-width: 260px;
+      font-size: 11px;
+      line-height: 2;
+      margin-top: 15px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,.7);
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color .3s;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.15);
+      padding-top: 23px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: rgba(255,255,255,.4);
+      font-size: 9px;
+      letter-spacing: 1px;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 900px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 45px 22px;
+      }
+
+      .gallery-card:nth-child(3n + 2),
+      .gallery-card:nth-child(3n) {
+        margin-top: 0;
+      }
+
+      .gallery-card:nth-child(even) {
+        margin-top: 55px;
+      }
+
+      .lightbox-panel {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .lightbox-content {
+        padding: 55px 30px;
+      }
+
+      .lightbox-image,
+      .lightbox-image img {
+        min-height: 480px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        height: 72px;
+        padding: 0 5%;
+      }
+
+      .logo {
+        font-size: 26px;
+      }
+
+      .nav {
+        gap: 15px;
+      }
+
+      .nav a {
+        font-size: 9px;
+        letter-spacing: .6px;
+      }
+
+      .nav .inquiry-btn {
+        display: none;
+      }
+
+      .hero {
+        padding: 75px 6% 50px;
+      }
+
+      .hero h1 {
+        letter-spacing: -1.8px;
+      }
+
+      .hero-description {
+        font-size: 11px;
+      }
+
+      .filter-wrap {
+        padding: 10px 5% 40px;
+        gap: 8px;
+      }
+
+      .filter-btn {
+        padding: 10px 14px;
+        font-size: 9px;
+      }
+
+      .gallery-section {
+        padding: 0 5% 80px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 35px 13px;
+      }
+
+      .gallery-card:nth-child(even) {
+        margin-top: 35px;
+      }
+
+      .card-title {
+        font-size: 19px;
+      }
+
+      .card-subtitle {
+        font-size: 9px;
+      }
+
+      .card-info {
+        padding-top: 13px;
+      }
+
+      .card-category {
+        font-size: 8px;
+        letter-spacing: 1.2px;
+      }
+
+      .card-open {
+        width: 34px;
+        height: 34px;
+        font-size: 17px;
+      }
+
+      .lightbox {
+        padding: 12px;
+      }
+
+      .lightbox-panel {
+        display: block;
+        max-height: 92vh;
+      }
+
+      .lightbox-image,
+      .lightbox-image img {
+        min-height: 0;
+        height: 310px;
+      }
+
+      .lightbox-content {
+        padding: 30px 25px;
+      }
+
+      .lightbox-content h2 {
+        font-size: 35px;
+      }
+
+      .lightbox-description {
+        margin: 15px 0 20px;
+      }
+
+      .request-btn {
+        margin-top: 25px;
+      }
+
+      .footer-top {
+        flex-direction: column;
+        padding-bottom: 40px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        line-height: 1.8;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="dust"></canvas>
+
+  <!-- HEADER -->
+  <header class="site-header">
+  <nav class="header-left">
+    <a href="menu.html">MENU</a>
+    <a href="index.html">HOME</a>
+    
+  </nav>
+
+  <a href="index.html" class="header-logo">sidewalk</a>
+
+  <nav class="header-right">
+    <a href="index.html#bespoke">RESERVE / ORDER</a>
+    
+      
+    </a>
+  </nav>
+</header>
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <p class="eyebrow">The Art of Something Beautiful</p>
+
+      <h1>A collection of<br><em>little indulgences.</em></h1>
+
+      <p class="hero-description">
+        Thoughtfully crafted pastries, delicate layers and bespoke
+        creations. A glimpse into our world of flavour, texture and artistry.
+      </p>
+
+      <div class="hero-rule"></div>
+    </section>
+
+    <!-- FILTERS -->
+    <section class="filter-wrap" aria-label="Gallery categories">
+      <button class="filter-btn active" data-filter="all">All Creations</button>
+      <button class="filter-btn" data-filter="cakes">Bespoke Cakes</button>
+      <button class="filter-btn" data-filter="viennoiserie">Viennoiserie</button>
+      <button class="filter-btn" data-filter="chocolate">Chocolate & Tarts</button>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery-section">
+      <div class="gallery-grid" id="galleryGrid">
+
+        <!-- Gallery cards are generated from the JavaScript data below -->
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-panel" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
+
+      <button class="close-lightbox" id="closeLightbox" aria-label="Close">×</button>
+
+      <div class="lightbox-image">
+        <img src="" alt="" id="lightboxImg">
+      </div>
+
+      <div class="lightbox-content">
+        <p class="lightbox-category" id="lightboxCategory"></p>
+
+        <h2 id="lightboxTitle"></h2>
+
+        <p class="lightbox-description" id="lightboxDescription"></p>
+
+        <div class="detail-row">
+          <span>Flavour notes</span>
+          <span id="lightboxFlavour"></span>
+        </div>
+
+        <div class="detail-row">
+          <span>Serving size</span>
+          <span id="lightboxServing"></span>
+        </div>
+
+        <button class="request-btn" id="requestSimilar">
+          Request Similar Creation ↗
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">sidewalk<span>.</span></div>
+        <p class="footer-note">
+          An expression of craftsmanship, thoughtful ingredients
+          and the little pleasures worth slowing down for.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="menu.html">Menu</a>
+        <a href="mailto:hello@sidewalk.example">Contact</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 SIDEWALK PATISSERIE</span>
+      <span>MADE WITH CARE · NEW DELHI</span>
+    </div>
+  </footer>
+
+  <script>
+    /* --------------------------------
+       GALLERY DATA
+    -------------------------------- */
+
+    const creations = [
+      {
+        id: 1,
+        title: "The Celebration",
+        category: "cakes",
+        categoryName: "Bespoke Cakes",
+        subtitle: "An occasion made unforgettable",
+        description: "A custom celebration cake, finished with delicate details and a considered balance of flavour and texture.",
+        flavour: "Vanilla · Berry · Cream",
+        serving: "8–10 people",
+        image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1100&q=85"
+      },
+      {
+        id: 2,
+        title: "Golden Croissant",
+        category: "viennoiserie",
+        categoryName: "Viennoiserie",
+        subtitle: "Buttery layers, beautifully crisp",
+        description: "A classic laminated pastry with a delicate, flaky exterior and a soft, buttery centre.",
+        flavour: "Cultured butter · Wheat",
+        serving: "Single pastry",
+        image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1100&q=85"
+      },
+      {
+        id: 3,
+        title: "Chocolate Reverie",
+        category: "chocolate",
+        categoryName: "Chocolate & Tarts",
+        subtitle: "A moment for chocolate",
+        description: "Rich chocolate layers with a smooth finish, made for those who appreciate a deeper indulgence.",
+        flavour: "Dark chocolate · Cocoa",
+        serving: "Individual portion",
+        image: "https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=1100&q=85"
+      },
+      {
+        id: 4,
+        title: "Petal & Cream",
+        category: "cakes",
+        categoryName: "Bespoke Cakes",
+        subtitle: "Soft details, thoughtful finishing",
+        description: "A refined cake concept with soft cream textures and delicate decorative finishing.",
+        flavour: "Vanilla · Fresh cream",
+        serving: "6–8 people",
+        image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1100&q=85"
+      },
+      {
+        id: 5,
+        title: "Morning Ritual",
+        category: "viennoiserie",
+        categoryName: "Viennoiserie",
+        subtitle: "A little something for the morning",
+        description: "A beautifully baked pastry with crisp golden layers and a tender centre.",
+        flavour: "Butter · Almond",
+        serving: "Single pastry",
+        image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1100&q=85"
+      },
+      {
+        id: 6,
+        title: "The Cocoa Tart",
+        category: "chocolate",
+        categoryName: "Chocolate & Tarts",
+        subtitle: "A delicate balance of textures",
+        description: "A crisp tart shell filled with a smooth chocolate centre for a rich yet balanced finish.",
+        flavour: "Cocoa · Dark chocolate",
+        serving: "Individual portion",
+        image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1100&q=85"
+      },
+      {
+        id: 7,
+        title: "A Little Romance",
+        category: "cakes",
+        categoryName: "Bespoke Cakes",
+        subtitle: "Made for your special moments",
+        description: "A bespoke cake concept designed around your occasion, with thoughtful finishing and flavour.",
+        flavour: "Red velvet · Cream cheese",
+        serving: "10–12 people",
+        image: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1100&q=85"
+      },
+      {
+        id: 8,
+        title: "The Pain au Chocolat",
+        category: "viennoiserie",
+        categoryName: "Viennoiserie",
+        subtitle: "A timeless French favourite",
+        description: "Delicate laminated pastry wrapped around rich chocolate, baked until beautifully golden.",
+        flavour: "Butter · Chocolate",
+        serving: "Single pastry",
+        image: "https://images.unsplash.com/photo-1623334044303-241021148842?auto=format&fit=crop&w=1100&q=85"
+      },
+      {
+        id: 9,
+        title: "Silk & Ganache",
+        category: "chocolate",
+        categoryName: "Chocolate & Tarts",
+        subtitle: "An indulgence in every layer",
+        description: "A chocolate-forward creation with smooth ganache and a delicate, balanced finish.",
+        flavour: "Chocolate · Cream · Cocoa",
+        serving: "Individual portion",
+        image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=1100&q=85"
+      }
+    ];
+
+    const galleryGrid = document.getElementById("galleryGrid");
+
+    /* --------------------------------
+       RENDER GALLERY
+    -------------------------------- */
+
+    function renderGallery(items) {
+      galleryGrid.innerHTML = "";
+
+      items.forEach((item, index) => {
+        const card = document.createElement("article");
+        card.className = "gallery-card";
+        card.dataset.category = item.category;
+
+        card.innerHTML = `
+          <div class="card-visual">
+            <img src="${item.image}" alt="${item.title}" loading="lazy">
+            <div class="card-glare"></div>
+            <span class="card-number">0${index + 1}</span>
+            <span class="card-open">↗</span>
+          </div>
+
+          <div class="card-info">
+            <p class="card-category">${item.categoryName}</p>
+            <h3 class="card-title">${item.title}</h3>
+            <p class="card-subtitle">${item.subtitle}</p>
+          </div>
+        `;
+
+        card.addEventListener("click", () => openLightbox(item));
+        galleryGrid.appendChild(card);
+
+        addTiltEffect(card);
+      });
+    }
+
+    renderGallery(creations);
+
+    /* --------------------------------
+       CATEGORY FILTER
+    -------------------------------- */
+
+    const filterButtons = document.querySelectorAll(".filter-btn");
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        const filter = button.dataset.filter;
+
+        const filteredItems = filter === "all"
+          ? creations
+          : creations.filter(item => item.category === filter);
+
+        renderGallery(filteredItems);
+      });
+    });
+
+    /* --------------------------------
+       3D TILT + DYNAMIC GLARE
+    -------------------------------- */
+
+    function addTiltEffect(card) {
+      const visual = card.querySelector(".card-visual");
+      const glare = card.querySelector(".card-glare");
+
+      const isTouch = window.matchMedia("(pointer: coarse)").matches;
+      if (isTouch) return;
+
+      card.addEventListener("mousemove", event => {
+        const rect = visual.getBoundingClientRect();
+
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateY = ((x - centerX) / centerX) * 6;
+        const rotateX = ((centerY - y) / centerY) * 6;
+
+        visual.style.transform =
+          `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+        const glareX = (x / rect.width) * 100;
+        const glareY = (y / rect.height) * 100;
+
+        glare.style.background = `
+          radial-gradient(
+            circle at ${glareX}% ${glareY}%,
+            rgba(255,255,255,.38),
+            transparent 55%
+          )
+        `;
+      });
+
+      card.addEventListener("mouseleave", () => {
+        visual.style.transform = "rotateX(0deg) rotateY(0deg)";
+      });
+    }
+
+    /* --------------------------------
+       LIGHTBOX
+    -------------------------------- */
+
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+
+    let selectedCreation = null;
+
+    function openLightbox(item) {
+      selectedCreation = item;
+
+      lightboxImg.src = item.image;
+      lightboxImg.alt = item.title;
+
+      document.getElementById("lightboxCategory").textContent =
+        item.categoryName;
+
+      document.getElementById("lightboxTitle").textContent =
+        item.title;
+
+      document.getElementById("lightboxDescription").textContent =
+        item.description;
+
+      document.getElementById("lightboxFlavour").textContent =
+        item.flavour;
+
+      document.getElementById("lightboxServing").textContent =
+        item.serving;
+
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+
+      document.getElementById("closeLightbox").focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    document.getElementById("closeLightbox")
+      .addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", event => {
+      if (event.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeLightbox();
+    });
+
+    /* --------------------------------
+       INQUIRY ACTIONS
+    -------------------------------- */
+
+    
+// Your WhatsApp number with country code.
+// India example: 91XXXXXXXXXX
+const WHATSAPP_NUMBER = "+918445868554";
+
+function sendInquiry(item) {
+
+  let message;
+
+  if (item) {
+    message = `Hello Sidewalk!
+
+I saw your "${item.title}" creation in your gallery.
+
+I would love to enquire about a similar creation.
+
+Category: ${item.categoryName}
+Flavour notes: ${item.flavour}
+Serving size: ${item.serving}
+
+Please share the pricing and customisation options.
+
+Thank you!`;
+  } else {
+    message = `Hello Sidewalk!
+
+I would like to enquire about a custom cake or bakery creation.
+
+Please share the available customisation options and pricing.
+
+Thank you!`;
+  }
+
+  const whatsappURL =
+    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+  window.open(whatsappURL, "_blank", "noopener,noreferrer");
+}
+
+    document.getElementById("requestSimilar")
+      .addEventListener("click", () => {
+        if (selectedCreation) sendInquiry(selectedCreation);
+      });
+
+    document.getElementById("headerInquiry")
+      .addEventListener("click", () => sendInquiry(null));
+
+    /* --------------------------------
+       AMBIENT CANVAS PARTICLES
+    -------------------------------- */
+
+    const canvas = document.getElementById("dust");
+    const ctx = canvas.getContext("2d");
+
+    let particles = [];
+    let canvasWidth = 0;
+    let canvasHeight = 0;
+
+    function resizeCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvasWidth = window.innerWidth;
+      canvasHeight = window.innerHeight;
+
+      canvas.width = canvasWidth * dpr;
+      canvas.height = canvasHeight * dpr;
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    class Particle {
+      constructor() {
+        this.reset(true);
+      }
+
+      reset(initial = false) {
+        this.x = Math.random() * canvasWidth;
+        this.y = initial
+          ? Math.random() * canvasHeight
+          : canvasHeight + 10;
+
+        this.radius = Math.random() * 1.5 + .4;
+        this.speedY = Math.random() * .25 + .08;
+        this.speedX = (Math.random() - .5) * .2;
+        this.alpha = Math.random() * .35 + .1;
+
+        this.color = Math.random() > .5
+          ? "197,160,89"
+          : "90,63,45";
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y -= this.speedY;
+
+        if (this.y < -10) this.reset();
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+
+        ctx.fillStyle =
+          `rgba(${this.color},${this.alpha})`;
+
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+
+      const count = Math.min(
+        65,
+        Math.floor(window.innerWidth / 18)
+      );
+
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    let animationFrame;
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+
+      animationFrame = requestAnimationFrame(animateParticles);
+    }
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    resizeCanvas();
+    initParticles();
+
+    if (!reduceMotion) {
+      animateParticles();
+    }
+
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      initParticles();
+    });
+
+    /* ==========================================================================
+   LUXURY PAGE TRANSITION CURTAIN (index.html <-> menu.html)
+   ========================================================================== */
+(function initLuxuryPageTransition() {
+  // 1. Create & inject the transition veil
+  const veil = document.createElement("div");
+  veil.id = "luxury-page-veil";
+  veil.innerHTML = `
+    <div style="text-align:center;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;letter-spacing:0.28em;color:#241914;font-weight:600;">SIDEWALK</div>
+      <div style="width:48px;height:1px;background:#C5A059;margin:8px auto 0;"></div>
+    </div>
+  `;
+
+  Object.assign(veil.style, {
+    position: "fixed",
+    inset: "0",
+    backgroundColor: "#FAF7F2",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: "99999",
+    opacity: "1",
+    pointerEvents: "all",
+    transition: "opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1)"
+  });
+
+  document.body.appendChild(veil);
+
+  // 2. Fade veil out smoothly when page finishes loading
+  window.addEventListener("pageshow", () => {
+    requestAnimationFrame(() => {
+      veil.style.opacity = "0";
+      veil.style.pointerEvents = "none";
+    });
+  });
+
+  // 3. Intercept internal navigation links to menu.html or index.html
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a");
+    if (!link) return;
+
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("#") || href.startsWith("mailto:") || link.target === "_blank") {
+      return;
+    }
+
+    if (href.endsWith(".html") || href.includes(".html#")) {
+      e.preventDefault();
+      veil.style.pointerEvents = "all";
+      veil.style.opacity = "1";
+
+      setTimeout(() => {
+        window.location.href = href;
+      }, 480);
+    }
+  });
+})();
+
+  </script>
+
+</body>
+</html>

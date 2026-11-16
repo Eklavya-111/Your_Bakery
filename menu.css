@@ -1,0 +1,702 @@
+/* Smooth cross-page luxury fade & subtle scale */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: pageFadeOut 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+::view-transition-new(root) {
+  animation: pageFadeIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes pageFadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.99); }
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: scale(1.01); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+
+
+/* ==========================================================================
+   SIDEWALK LUXURY MENU BOOK — STYLESHEET (menu.css)
+   Theme: Warm White, Ivory Paper (#FAF7F2), Luxury Espresso (#241914), Brushed Gold (#C5A059)
+   ========================================================================== */
+
+:root {
+  --bg-ivory: #FAF7F2;
+  --bg-page-alt: #F5EFE6;
+  --espresso-deep: #241914;
+  --espresso-medium: #3D2B22;
+  --espresso-soft: #6E5849;
+  --gold-primary: #C5A059;
+  --gold-light: #DFC690;
+  --gold-muted: rgba(197, 160, 89, 0.35);
+  --white-pure: #FFFFFF;
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --transition-smooth: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 35%, #FFFFFF 0%, #F4EFE8 55%, #E6DDD0 100%);
+  color: var(--espresso-deep);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ==========================================================================
+   1. TOP NAVIGATION BAR & CHAPTER TABS
+   ========================================================================== */
+.luxury-navbar {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--gold-muted);
+  padding: 0.85rem 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  z-index: 100;
+  box-shadow: 0 4px 25px rgba(36, 25, 20, 0.04);
+}
+
+.back-home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--espresso-deep);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--gold-muted);
+  border-radius: 2px;
+  transition: var(--transition-smooth);
+}
+
+.back-home-link:hover {
+  background: var(--espresso-deep);
+  color: var(--bg-ivory);
+  border-color: var(--espresso-deep);
+}
+
+.back-home-link .arrow {
+  transition: transform 0.3s ease;
+}
+
+.back-home-link:hover .arrow {
+  transform: translateX(-4px);
+}
+
+.nav-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.brand-title {
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: var(--espresso-deep);
+}
+
+.brand-subtitle {
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  color: var(--gold-primary);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.chapter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--espresso-soft);
+  padding: 0.48rem 0.85rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  border-radius: 2px;
+}
+
+.tab-btn:hover {
+  color: var(--espresso-deep);
+  border-color: var(--gold-muted);
+  background: rgba(197, 160, 89, 0.08);
+}
+
+.tab-btn.active {
+  background: var(--espresso-deep);
+  color: var(--bg-ivory);
+  border-color: var(--gold-primary);
+  box-shadow: 0 2px 10px rgba(36, 25, 20, 0.15);
+}
+
+/* ==========================================================================
+   2. BOOK STAGE & 3D FLIPBOOK CONTAINER
+   ========================================================================== */
+.book-stage {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  overflow: hidden;
+}
+
+.ambient-glow {
+  position: absolute;
+  width: 75vw;
+  height: 75vh;
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.12) 0%, rgba(36, 25, 20, 0.03) 60%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.book-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1120px;
+  min-height: 760px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: drop-shadow(0 28px 50px rgba(36, 25, 20, 0.22));
+}
+.flipbook-container {
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   3. INDIVIDUAL PAGE STYLING & LUXURY ORNAMENTS
+   ========================================================================== */
+.menu-page {
+  background-color: var(--bg-ivory);
+  color: var(--espresso-deep);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 22px;
+  user-select: none;
+}
+
+/* Subtle paper texture & realistic inner spine shadows */
+.menu-page.--left {
+  background: linear-gradient(to right, #FAF7F2 0%, #FAF7F2 88%, #EFE9DF 96%, #DFD6C7 100%);
+  border-right: 1px solid rgba(36, 25, 20, 0.12);
+}
+
+.menu-page.--right {
+  background: linear-gradient(to left, #FAF7F2 0%, #FAF7F2 88%, #EFE9DF 96%, #DFD6C7 100%);
+  border-left: 1px solid rgba(36, 25, 20, 0.08);
+}
+
+/* Ornate Brushed-Gold Double Frame */
+.page-border {
+  width: 100%;
+  height: 100%;
+  border: 1.5px solid var(--gold-primary);
+  padding: 10px 14px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.page-border::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border: 0.5px solid var(--gold-muted);
+  pointer-events: none;
+}
+
+/* Corner Filigree Accents */
+.corner-ornament {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--gold-primary);
+  border-style: solid;
+  pointer-events: none;
+}
+.corner-ornament.tl { top: -2px; left: -2px; border-width: 3px 0 0 3px; }
+.corner-ornament.tr { top: -2px; right: -2px; border-width: 3px 3px 0 0; }
+.corner-ornament.bl { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; }
+.corner-ornament.br { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; }
+
+/* ==========================================================================
+   4. FRONT & BACK HARD COVERS (LUXURY ESPRESSO & WHITE/GOLD)
+   ========================================================================== */
+.menu-page.cover-page {
+  background: radial-gradient(circle at center, #36241C 0%, #241914 75%, #18100C 100%);
+  color: var(--bg-ivory);
+  padding: 28px;
+}
+
+.cover-page .page-border {
+  border: 2px solid var(--gold-primary);
+  padding: 24px 20px;
+  align-items: center;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.cover-badge {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-top: 0.5rem;
+}
+
+.cover-title {
+  font-family: var(--font-serif);
+  font-size: 3.1rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--white-pure);
+  margin: 0.4rem 0 0.2rem;
+}
+
+.cover-subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--gold-primary);
+  letter-spacing: 0.08em;
+  margin-bottom: 1.1rem;
+}
+
+.cover-divider {
+  width: 90px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+  margin: 0.6rem auto;
+}
+
+.cover-hero-frame {
+  width: 82%;
+  height: 250px;
+  margin: 0.8rem auto;
+  padding: 6px;
+  border: 1px solid var(--gold-primary);
+  background: rgba(250, 247, 242, 0.06);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.cover-hero-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cover-footer-note {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-top: 0.8rem;
+}
+
+.cover-edition {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: rgba(250, 247, 242, 0.65);
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   5. INTERIOR EDITORIAL LAYOUT, CHAPTER HEADERS & HERO PHOTOS
+   ========================================================================== */
+.page-header {
+  text-align: center;
+  margin-bottom: 0.35rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--gold-muted);
+  flex-shrink: 0;
+}
+
+.chapter-kicker {
+  font-family: var(--font-sans);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold-primary);
+  display: block;
+}
+
+.chapter-title {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--espresso-deep);
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  margin-top: 1px;
+}
+
+.chapter-subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--espresso-soft);
+}
+
+/* Framed Hero Image (1 per spread) */
+.spread-hero {
+  width: 100%;
+  height: 76px;
+  border: 1px solid var(--gold-primary);
+  padding: 2px;
+  background: var(--white-pure);
+  margin-bottom: 0.4rem;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+
+.spread-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.03) sepia(0.06);
+}
+
+.spread-hero-caption {
+  position: absolute;
+  bottom: 6px;
+  right: 8px;
+  background: rgba(36, 25, 20, 0.82);
+  color: var(--bg-ivory);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border: 0.5px solid var(--gold-primary);
+}
+
+/* Menu Items List */
+.menu-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+  flex: 1;
+  justify-content: space-evenly;
+  min-height: 0;
+}
+
+.menu-subcat-banner {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--espresso-medium);
+  border-bottom: 1px dashed var(--gold-muted);
+  padding-bottom: 2px;
+  margin-top: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-top-row {
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+}
+
+.item-name {
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--espresso-deep);
+  letter-spacing: 0.01em;
+}
+
+.dietary-dot {
+  font-size: 0.6rem;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+.dietary-dot.veg { color: #2E6F40; }
+.dietary-dot.non-veg { color: #9E2A2B; }
+
+.item-leader {
+  flex: 1;
+  border-bottom: 1px dotted rgba(197, 160, 89, 0.55);
+  margin: 0 8px;
+  position: relative;
+  top: -3px;
+}
+
+.item-price {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--espresso-deep);
+  white-space: nowrap;
+}
+
+.item-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 1px;
+}
+
+.item-desc {
+  font-family: var(--font-sans);
+  font-size: 0.61rem;
+  font-weight: 400;
+  color: var(--espresso-soft);
+  line-height: 1.22;
+}
+.item-meta {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--gold-primary);
+  white-space: nowrap;
+}
+
+/* Page Footer */
+.page-footer {
+  background-color: var(--bg-ivory); /* Prevents any text bleeding behind footer */
+  position: relative;
+  z-index: 5;
+  border-top: 1px solid var(--gold-muted);
+  padding-top: 0.3rem;
+  margin-top: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.54rem;
+  color: var(--espresso-soft);
+  flex-shrink: 0;
+}
+.page-number-badge {
+  font-family: var(--font-serif);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--espresso-deep);
+}
+
+/* ==========================================================================
+   6. BOTTOM NAVIGATION & PAGE COUNTER
+   ========================================================================== */
+.book-controls {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  border-top: 1px solid var(--gold-muted);
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  z-index: 100;
+}
+
+.control-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--espresso-deep);
+  color: var(--bg-ivory);
+  border: 1px solid var(--gold-primary);
+  padding: 0.5rem 1.15rem;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: var(--transition-smooth);
+}
+
+.control-btn:hover:not(:disabled) {
+  background: var(--gold-primary);
+  color: var(--espresso-deep);
+}
+
+.control-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.page-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+#pageCounter {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--espresso-deep);
+  letter-spacing: 0.05em;
+}
+
+.interaction-hint {
+  font-size: 0.65rem;
+  color: var(--espresso-soft);
+  margin-top: 1px;
+}
+
+/* ==========================================================================
+   7. RESPONSIVE DESIGN (DESKTOP SPREAD VS MOBILE SINGLE-PAGE)
+   ========================================================================== */
+ @media (max-width: 900px) {
+  .luxury-navbar {
+    flex-direction: column;
+    padding: 0.6rem 0.75rem;
+    gap: 0.45rem;
+  }
+
+  .brand-title {
+    font-size: 1.25rem;
+  }
+
+  .chapter-tabs {
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .tab-btn {
+    font-size: 0.62rem;
+    padding: 0.32rem 0.5rem;
+  }
+
+  .book-stage {
+    min-height: auto;
+    padding: 0.5rem 0;
+  }
+
+  .book-wrapper {
+    min-height: auto;
+  }
+
+  .menu-page {
+    padding: 10px;
+  }
+
+  .page-border {
+    padding: 8px 10px;
+  }
+
+  .chapter-title {
+    font-size: 1.15rem;
+  }
+
+  .chapter-subtitle {
+    font-size: 0.7rem;
+  }
+
+  .spread-hero {
+    height: 58px;
+    margin-bottom: 0.3rem;
+  }
+
+  .item-name {
+    font-size: 0.82rem;
+  }
+
+  .item-price {
+    font-size: 0.72rem;
+  }
+
+  .item-desc {
+    font-size: 0.56rem;
+    line-height: 1.18;
+  }
+
+  .item-meta {
+    display: none; /* Keeps mobile rows uncluttered */
+  }
+
+  .cover-title {
+    font-size: 2.1rem;
+  }
+
+  .cover-hero-frame {
+    height: 170px;
+  }
+
+  .book-controls {
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .control-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.68rem;
+  }
+
+  #pageCounter {
+    font-size: 0.88rem;
+  }
+
+  .interaction-hint {
+    display: none;
+  }
+}
